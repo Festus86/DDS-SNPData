@@ -70,3 +70,4 @@ make comparison easier.
     lines(volest3, type = "l", col="blue")
 
 ![](SNPData_files/figure-markdown_strict/Volatility-1.png)
+![](https://github.com/Festus86/DDS-SNPData/Volatilty%20Plot.png)

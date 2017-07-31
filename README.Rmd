@@ -63,5 +63,7 @@ lines(volest2,type="l",col="red")
 
 #  Over lay  the values  of volest3 on the same plot  
 lines(volest3, type = "l", col="blue")
+
 ```
+![](https://github.com/Festus86/DDS-SNPData/Volatilty Plot.png)
 
