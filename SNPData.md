@@ -1,0 +1,72 @@
+### SP500 Finanancail Data Analysis
+
+In this Analysis, we demo how to explore and analyse financial data.We
+use the SP500 data set as an example.In our analysis, we find the log
+returns of our dataset, create our own function to calculate volatility
+at different periods of time (look back window) and then use the values
+to show volatility for different index values all in one plot.This is to
+make comparison easier.
+
+### Getting the data
+
+    #Load the t series package and download the SNPdata
+    library(tseries)
+    SNPdata <- get.hist.quote('^gspc',quote="Close")
+
+    ## time series ends   2017-07-28
+
+    summary(SNPdata)
+
+    ##      Index                Close       
+    ##  Min.   :1991-01-02   Min.   : 311.5  
+    ##  1st Qu.:1997-08-13   1st Qu.: 829.8  
+    ##  Median :2004-04-12   Median :1166.9  
+    ##  Mean   :2004-04-10   Mean   :1164.0  
+    ##  3rd Qu.:2010-12-02   3rd Qu.:1409.3  
+    ##  Max.   :2017-07-28   Max.   :2477.8
+
+### Analysis
+
+    # Calculating  the log returns, 
+    SNPret <- log(lag(SNPdata)) - log(SNPdata)
+
+    # Calculating volatility
+    SNPvol <- sd(SNPret) * sqrt(250) * 100
+
+
+    #Creating a user defined function called getVol to calculate volatility at different periods
+    getVol <- function(d, logrets) {
+        var = 0
+        lam = 0
+        varlist <- c()
+
+        for (r in logrets) {
+            lam = lam*(1 - 1/d) + 1
+          var = (1 - 1/lam)*var + (1/lam)*r^2
+            varlist <- c(varlist, var)
+        }
+
+        sqrt(varlist)
+    }
+
+### Volatility Plot
+
+    # Get Volatility at 10,SNPret
+    volest <- getVol(10,SNPret)
+
+    # Get Volatility at 30,SNPret
+    volest2 <- getVol(30,SNPret)
+
+    # Get Volatility at 100,SNPret
+    volest3 <- getVol(100,SNPret)
+
+    # Plot the results
+    plot(volest,type="l")
+
+    # Over lay  the values of volest2 on the same plot  
+    lines(volest2,type="l",col="red")
+
+    #  Over lay  the values  of volest3 on the same plot  
+    lines(volest3, type = "l", col="blue")
+
+![](SNPData_files/figure-markdown_strict/Volatility-1.png)

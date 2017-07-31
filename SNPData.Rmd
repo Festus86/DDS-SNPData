@@ -2,7 +2,7 @@
 title: "HW10 - SNPData"
 author: "Festus Asare Yeboah "
 date: "July 30, 2017"
-output: html_document
+output: md_document
 ---
 
 
